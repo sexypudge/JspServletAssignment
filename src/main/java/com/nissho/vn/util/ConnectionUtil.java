@@ -51,17 +51,18 @@ public class ConnectionUtil {
 	/*
 	 * Delete/Update query
 	 */
-	public static void runQuery(String query, Connection con) {
-
+	public static int runQuery(String query, Connection con) {
+		int in = 0;
 		PreparedStatement st;
 		try {
 			st = con.prepareStatement(query);
-			st.executeUpdate();
+			in = st.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
 			closeConnection(con);
 		}
+		return in;
 		
 	}
 

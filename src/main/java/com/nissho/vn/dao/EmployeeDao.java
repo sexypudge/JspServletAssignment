@@ -6,6 +6,7 @@ import java.util.List;
 import com.nissho.vn.model.Employee;
 
 public interface EmployeeDao {
-	List<Employee> getAllEmployees() throws SQLException;
-	
+	List<Employee> getAllEmployees() throws SQLException;	
+	int insertEmployee(Employee employee) throws SQLException;
+	int getLastId();
 }
