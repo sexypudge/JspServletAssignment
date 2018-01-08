@@ -38,19 +38,28 @@ public class InsertEmployeeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		response.setContentType("text/html; charset=UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+	    request.setCharacterEncoding("UTF-8");
+	    
 		int lastId = employeeDao.getLastId();
 		
-		String name = (String) request.getAttribute("name");
-		int age = (Integer) request.getAttribute("age");
-		int deptId = (Integer) request.getAttribute("deptid");
-		String sex = (String) request.getAttribute("sex");
+		String name = (String) request.getParameter("name");
+		int age =  Integer.parseInt(request.getParameter("age"));
+		int deptId = Integer.parseInt(request.getParameter("department"));
+		String sex = (String) request.getParameter("sex");
 		
-		try {
-			employeeDao.insertEmployee(new Employee(lastId+1, name, age, deptId, sex));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		
+		
+		if(deptId != 0) {
+			try {
+				employeeDao.insertEmployee(new Employee(lastId+1, name, deptId, age, sex));
+				response.sendRedirect("index");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 
 }

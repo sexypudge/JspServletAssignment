@@ -28,6 +28,10 @@ public class Index extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+	    request.setCharacterEncoding("UTF-8");
+	    
 		List<Employee> listEmployees = null;
 		List<Department> listDepartments = null;
 		try {
@@ -38,6 +42,7 @@ public class Index extends HttpServlet {
 		}
 		request.setAttribute("listEmployees", listEmployees);
 		request.setAttribute("listDepartments", listDepartments);
+	
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 

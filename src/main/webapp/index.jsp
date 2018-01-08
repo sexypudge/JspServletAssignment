@@ -26,7 +26,7 @@
 							Họ và Tên
 						</label>
 						<div class="col-sm-4">
-							<input type="text" id="name" class="form-control">
+							<input type="text" id="name" name="name" class="form-control">
 						</div>
 					</div>
 					<div class="form-group">
@@ -42,10 +42,10 @@
 						<div class="col-sm-4">
 							<div class="radio">
 								<label> 
-									<input type="radio" name="male" id="male" value="0" /> Nam
+									<input type="radio" name="sex" id="male" value="Nam" /> Nam
 								</label> 
 								<label> 
-									<input type="radio" name="female" id="female" value="1" /> Nữ
+									<input type="radio" name="sex" id="female" value="Nữ" /> Nữ
 								</label>
 							</div>
 						</div>
