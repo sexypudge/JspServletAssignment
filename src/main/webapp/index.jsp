@@ -24,7 +24,9 @@
                 data:{
                 	employeeId: empId
                 },
-               
+                success: function(data){
+                	window.location.href = "index"
+                },
             });   
 	    });
 	});
@@ -41,14 +43,23 @@
 		</div>
 		<div class="row" style="margin-top: 50px;">
 			<form action="insert" method="POST" class="form-horizontal" name="employeeForm">
-				<div class="col-sm-3"></div>
+				<div class="col-sm-3">
+					<%-- <input type="text" id="empId" name="empId" class="form-control" value="${not empty employeeToBeModified ? employeeToBeModified.name : ''}" hidden> --%>
+				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label class="control-label col-sm-2 text-left" for="name">
 							Họ và Tên
 						</label>
 						<div class="col-sm-4">
-							<input type="text" id="name" name="name" class="form-control">
+							<c:choose>
+							  <c:when test="${empty employeeToBeModified}">
+							    <input type="text" id="name" name="name" class="form-control">
+							  </c:when>						  
+							  <c:otherwise>
+							    <input type="text" id="name" name="name" class="form-control" value="${employeeToBeModified.name}">
+							  </c:otherwise>
+							</c:choose>
 						</div>
 						<div class="col-sm-4">
 							<c:if test="${not empty validateName}">
@@ -59,7 +70,14 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2 text-left" for="age">Tuổi</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" name="age" id="age">
+							<c:choose>
+							  <c:when test="${empty employeeToBeModified}">
+							    <input type="text" class="form-control" name="age" id="age">
+							  </c:when>						  
+							  <c:otherwise>
+							    <input type="text" id="age" name="age" class="form-control" value="${employeeToBeModified.age}">
+							  </c:otherwise>
+							</c:choose>
 						</div>
 						<div class="col-sm-4">
 							<c:if test="${not empty validateAge}">
@@ -73,12 +91,24 @@
 						</label>
 						<div class="col-sm-4">
 							<div class="radio">
-								<label> 
-									<input type="radio" name="sex" id="male" value="Nam" /> Nam
-								</label> 
-								<label> 
-									<input type="radio" name="sex" id="female" value="Nữ" /> Nữ
-								</label>
+								<c:choose>
+								  <c:when test="${empty employeeToBeModified}">
+								    <label> 
+										<input type="radio" name="sex" id="male" value="Nam" /> Nam
+									</label> 
+									<label> 
+										<input type="radio" name="sex" id="female" value="Nữ" /> Nữ
+									</label>
+								  </c:when>						  
+								  <c:otherwise>
+								    <label> 
+										<input type="radio" name="sex" id="male" value="Nam" ${employeeToBeModified.sex == 'Nam' ? 'checked' : '' } /> Nam
+									</label> 
+									<label> 
+										<input type="radio" name="sex" id="female" value="Nữ" ${employeeToBeModified.sex == 'Nữ' ? 'checked' : '' }/> Nữ
+									</label>
+								  </c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -90,7 +120,7 @@
 							<select id="department" name="department" class="form-control">
 								<c:if test="${not empty listDepartments}">
 									<c:forEach items="${listDepartments}" var="dept">
-										<option value="${dept.deptId}">${dept.toString()}</option>
+										<option value="${dept.deptId}" ${empty employeeToBeModified ? '' : (employeeToBeModified.deptId == dept.deptId ? 'selected' : '') }>${dept.toString()}</option>
 									</c:forEach>
 								</c:if>
 							</select>
@@ -98,11 +128,9 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-6" style="text-align: center;">
-							<input class="btn btn-primary" type="submit" value="Thêm mới">
-							<input class="btn btn-primary" type="button" style="margin-left: 20px;"
-								value="Cập nhật"> 
-							<input class="btn" type="button" style="margin-left: 20px;"
-								value="Huỷ">
+							<input class="btn btn-primary " type="submit" value="Thêm mới" ${empty employeeToBeModified ? '' : 'disabled' }>
+							<button formaction="update?emp_id=${not empty employeeToBeModified ? employeeToBeModified.empId : ''}" class="btn btn-primary" style="margin-left: 20px;" ${empty employeeToBeModified ? 'disabled' : '' }>Cập nhật</button>
+							<button formaction="index" class="btn" style="margin-left: 20px;" ${empty employeeToBeModified ? 'disabled' : '' }>Hủy</button>
 						</div>
 					</div>
 				</div>
@@ -139,7 +167,7 @@
 											</c:forEach>
 										</c:if>
 									</td>
-									<th style="text-align: center;"><a href="/" >Sửa</a></th>
+									<th style="text-align: center;"><a id="edit" href="findOne?emp_id=${empl.empId}" >Sửa</a></th>
 									<th style="text-align: center;"><a id="remove" data-toggle="modal" data-target="#myModal" onclick="getIdtoRemove(${empl.empId})">Xoá</a></th>
 								</tr>
 							</c:forEach>

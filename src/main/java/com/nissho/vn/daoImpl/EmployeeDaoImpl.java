@@ -86,12 +86,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	public int updateEmployee(Employee employee) throws SQLException {
 		Connection con = ConnectionUtil.loadDriver();
-		String query = "UPDATE INTO employee SET "
+		String query = "UPDATE employee SET "
 				+"name = '"+employee.getName()
 				+"',dept_id = "+ employee.getDeptId()
 				+",age = "+employee.getAge()
 				+",sex = '" +employee.getSex()
-				+"' WHERE emp_id =" +employee.getEmpId() ;
+				+"' WHERE emp_id = " +employee.getEmpId() ;
 		int num = 0;
 		try {
 			num = ConnectionUtil.runQuery(query, con);
@@ -101,6 +101,30 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ConnectionUtil.closeConnection(con);
 		}
 		return num;
+	}
+
+	public Employee getEmployeeById(int id) throws SQLException {
+		Connection con = ConnectionUtil.loadDriver();
+
+		String query = "SELECT * FROM employee WHERE emp_id = " + id;
+
+		Employee employee = new Employee();
+
+		ResultSet rs = ConnectionUtil.getResultSet(query, con);
+		try {
+			while (rs.next()) {
+				employee.setEmpId(rs.getInt("emp_id"));
+				employee.setName(rs.getString("name"));
+				employee.setDeptId(rs.getInt("dept_id"));
+				employee.setSex(rs.getString("sex"));
+				employee.setAge(rs.getInt("age"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			ConnectionUtil.closeConnection(con);
+		}
+		return employee;
 	}
 
 }
