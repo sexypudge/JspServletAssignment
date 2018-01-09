@@ -70,4 +70,37 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return empId;
 	}
 
+	public int removeEmployee(int id) {
+		Connection con = ConnectionUtil.loadDriver();
+		String query = "DELETE FROM employee WHERE emp_id =" + id;
+		int num = 0;
+		try {
+			num = ConnectionUtil.runQuery(query, con);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			ConnectionUtil.closeConnection(con);
+		}
+		return num;
+	}
+
+	public int updateEmployee(Employee employee) throws SQLException {
+		Connection con = ConnectionUtil.loadDriver();
+		String query = "UPDATE INTO employee SET "
+				+"name = '"+employee.getName()
+				+"',dept_id = "+ employee.getDeptId()
+				+",age = "+employee.getAge()
+				+",sex = '" +employee.getSex()
+				+"' WHERE emp_id =" +employee.getEmpId() ;
+		int num = 0;
+		try {
+			num = ConnectionUtil.runQuery(query, con);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			ConnectionUtil.closeConnection(con);
+		}
+		return num;
+	}
+
 }

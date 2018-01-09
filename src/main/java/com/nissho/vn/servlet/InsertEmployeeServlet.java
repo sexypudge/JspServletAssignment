@@ -22,6 +22,8 @@ public class InsertEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EmployeeDao employeeDao = new EmployeeDaoImpl();      
     
+	private static final int INCREASE_ID_BY_1 = 1;
+	
     public InsertEmployeeServlet() {
         super();
        
@@ -46,19 +48,19 @@ public class InsertEmployeeServlet extends HttpServlet {
 		
 		String name = (String) request.getParameter("name");
 		int age =  Integer.parseInt(request.getParameter("age"));
-		int deptId = Integer.parseInt(request.getParameter("department"));
 		String sex = (String) request.getParameter("sex");
+		int deptId = Integer.parseInt(request.getParameter("department"));
 		
-		
-		
-		if(deptId != 0) {
-			try {
-				employeeDao.insertEmployee(new Employee(lastId+1, name, deptId, age, sex));
-				response.sendRedirect("index");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		if(sex == null) {
+			sex = "";
 		}
+		
+		try {
+			employeeDao.insertEmployee(new Employee(lastId+INCREASE_ID_BY_1, name, deptId, age, sex));
+			response.sendRedirect("index");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 		
 	}
 

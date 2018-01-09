@@ -59,9 +59,7 @@ public class ConnectionUtil {
 			in = st.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-		} finally {
-			closeConnection(con);
-		}
+		} 
 		return in;
 		
 	}
