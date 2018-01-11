@@ -19,9 +19,10 @@ import com.nissho.vn.model.Employee;
 
 @WebServlet("/findOne")
 public class FindOneEmployeeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private EmployeeDao employeeDao = new EmployeeDaoImpl();  
-	private DepartmentDao departmentDao = new DeparmentDaoImpl();
+    private static final long serialVersionUID = 1L;
+    private EmployeeDao employeeDao = new EmployeeDaoImpl();
+    private DepartmentDao departmentDao = new DeparmentDaoImpl();
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -29,38 +30,38 @@ public class FindOneEmployeeServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
-	    response.setCharacterEncoding("UTF-8");
-	    request.setCharacterEncoding("UTF-8");
-	    
-	    int idToBeModified = Integer.parseInt(request.getParameter("emp_id"));
-	    
-	    Employee employeeToBeModified = null;
-		List<Employee> listEmployees = null;
-		List<Department> listDepartments = null;
-		try {
-			listEmployees = employeeDao.getAllEmployees();
-			listDepartments = departmentDao.getAllDepartments();
-			employeeToBeModified = employeeDao.getEmployeeById(idToBeModified);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("listEmployees", listEmployees);
-		request.setAttribute("listDepartments", listDepartments);
-		request.setAttribute("employeeToBeModified", employeeToBeModified);
-		
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+        int idToBeModified = Integer.parseInt(request.getParameter("emp_id"));
+
+        Employee employeeToBeModified = null;
+        List <Employee> listEmployees = null;
+        List <Department> listDepartments = null;
+        try {
+            listEmployees = employeeDao.getAllEmployees();
+            listDepartments = departmentDao.getAllDepartments();
+            employeeToBeModified = employeeDao.getEmployeeById(idToBeModified);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("listEmployees", listEmployees);
+        request.setAttribute("listDepartments", listDepartments);
+        request.setAttribute("employeeToBeModified", employeeToBeModified);
+
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
 
 }

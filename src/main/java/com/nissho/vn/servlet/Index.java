@@ -19,50 +19,50 @@ import com.nissho.vn.model.Employee;
 
 @WebServlet("/index")
 public class Index extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    private EmployeeDao employeeDao = new EmployeeDaoImpl();   
+    private static final long serialVersionUID = 1L;
+    private EmployeeDao employeeDao = new EmployeeDaoImpl();
     private DepartmentDao departmentDao = new DeparmentDaoImpl();
-    
+
     public Index() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 		response.setContentType("text/html; charset=UTF-8");
-	    response.setCharacterEncoding("UTF-8");
-	    request.setCharacterEncoding("UTF-8");
-	    
-		List<Employee> listEmployees = null;
-		List<Department> listDepartments = null;
-		try {
-			listEmployees = employeeDao.getAllEmployees();
-			listDepartments = departmentDao.getAllDepartments();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("listEmployees", listEmployees);
-		request.setAttribute("listDepartments", listDepartments);
-	
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
-	    response.setCharacterEncoding("UTF-8");
-	    request.setCharacterEncoding("UTF-8");
-	    
-		List<Employee> listEmployees = null;
-		List<Department> listDepartments = null;
-		try {
-			listEmployees = employeeDao.getAllEmployees();
-			listDepartments = departmentDao.getAllDepartments();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("listEmployees", listEmployees);
-		request.setAttribute("listDepartments", listDepartments);
-	
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
-	}
+        List <Employee> listEmployees = null;
+        List <Department> listDepartments = null;
+        try {
+            listEmployees = employeeDao.getAllEmployees();
+            listDepartments = departmentDao.getAllDepartments();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("listEmployees", listEmployees);
+        request.setAttribute("listDepartments", listDepartments);
+
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
+        List <Employee> listEmployees = null;
+        List <Department> listDepartments = null;
+        try {
+            listEmployees = employeeDao.getAllEmployees();
+            listDepartments = departmentDao.getAllDepartments();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("listEmployees", listEmployees);
+        request.setAttribute("listDepartments", listDepartments);
+
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
 
 }

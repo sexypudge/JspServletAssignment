@@ -14,28 +14,26 @@ import com.nissho.vn.daoImpl.EmployeeDaoImpl;
 
 @WebServlet("/remove")
 public class RemoveEmployeeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private EmployeeDao employeeDao = new EmployeeDaoImpl();
+    private static final long serialVersionUID = 1L;
+    private EmployeeDao employeeDao = new EmployeeDaoImpl();
 
-	public RemoveEmployeeServlet() {
-		super();
-	}
+    public RemoveEmployeeServlet() {
+        super();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
+    }
 
-		try {
-			employeeDao.removeEmployee(employeeId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		response.sendRedirect("index");
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int employeeId = Integer.parseInt(request.getParameter("employeeId"));
+
+        try {
+            employeeDao.removeEmployee(employeeId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect("index");
+    }
 
 }
